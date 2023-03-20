@@ -11,7 +11,7 @@ I personally inspect a lot from the [qb-prison](https://github.com/qbcore-framew
 - Display a notify to discord information about the jailled player and the admin that did so.
 
 # Preview
-[PREVIEW](https://youtu.be/tqXSLSRVTow)
+[PREVIEW](https://www.youtube.com/watch?v=mYMGHzLiSxQ)
 
 # Support
 Join our discord today for latest update and faster support:
