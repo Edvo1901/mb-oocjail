@@ -76,7 +76,7 @@ QBCore.Commands.Add(Config.JailCommandName.name, Config.JailCommandName.help, {{
             reason[#reason+1] = args[i]
         end
 
-        if QBCore.Functions.HasPermission(src, Config.JailCommandName.permission) or IsPlayerAceAllowed(src, 'command') ~= 1 then
+        if src then
             TriggerEvent("mb-oocjail:server:JailPlayer", tonumber(args[1]), tonumber(args[2]))
             MBNotify(Lang:t("notify.title"), Lang:t("success.you_have_been_jailed"), 'error', src)
             sendToDiscord(Lang:t("log.jail_title"), Lang:t("log.jail_description", {time = tonumber(args[2]), reason = table.concat(reason, " ")}), Config.Log.jail_color, tonumber(args[1]), src)
@@ -84,18 +84,18 @@ QBCore.Commands.Add(Config.JailCommandName.name, Config.JailCommandName.help, {{
             MBNotify(Lang:t("notify.title"), Lang:t("error.no_permission"), 'error', src)
         end
     end
-end)
+end, Config.JailCommandName.permission)
 
 QBCore.Commands.Add(Config.UnjailCommandName.name, Config.UnjailCommandName.help, {{name = Lang:t("argument.id"), help = Lang:t("argument.id_help")}}, true, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if QBCore.Functions.HasPermission(src, Config.UnjailCommandName.permission) or IsPlayerAceAllowed(src, 'command') ~= 1 then
+    if Player then
         local playerId = tonumber(args[1])
         TriggerClientEvent("mb-oocjail:client:UnJailOOC", playerId)
     else
         MBNotify(Lang:t("notify.title"), Lang:t("error.no_permission"), 'error', src)
     end
-end)
+end, Config.UnjailCommandName.permission)
 
 QBCore.Commands.Add(Config.CheckTimeLeftCommand.name, Config.CheckTimeLeftCommand.help, {}, false, function(source)
     local src = source

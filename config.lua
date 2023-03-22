@@ -29,7 +29,7 @@ Config.PreventEscapeMod = {
 --Log/Annoucement on Discord
 Config.Log = {
     --Leave the webhook blank ("") if you dont want this feature
-    webhook = "https://discord.com/api/webhooks/1087469418696675398/e0ozTdCtS7qVcsqXDUJw_lP_nmVzGs4vF2Qi1GpCYAyds8OSAz6v8Pn9y3_w_6vWjb_l",
+    webhook = "",
     --Set avatar for the log/annoucement (optional)
     avatar = "https://media.discordapp.net/attachments/1037224938005872661/1037225027453599744/Guess_project.png",
     --Set the server name for the log/annoucement (optional)
