@@ -73,6 +73,7 @@ RegisterNetEvent('mb-oocjail:client:Leave', function()
 	if inJail then
 		jailTime = 0
 		inJail = false
+		TriggerServerEvent("mb-oocjail:server:SetJailTime", 0)
 		DoScreenFadeOut(500)
 		while not IsScreenFadedOut() do
 			Wait(10)
@@ -98,10 +99,12 @@ end)
 RegisterNetEvent('mb-oocjail:client:checkTime', function()
 	while inJail and jailTime > 0 do
 		Citizen.Wait(60 * 1000)
-		jailTime = jailTime - 1
-		if jailTime <= 0 then jailTime = 0 end
-		TriggerServerEvent("mb-oocjail:server:SetJailTime", jailTime)
-		TriggerServerEvent("mb-oocjail:server:CheckJailTime", jailTime)
+		if inJail and jailTime > 0 then
+			jailTime = jailTime - 1
+			if jailTime <= 0 then jailTime = 0 end
+			TriggerServerEvent("mb-oocjail:server:SetJailTime", jailTime)
+			TriggerServerEvent("mb-oocjail:server:CheckJailTime", jailTime)
+		end
 	end
 	TriggerEvent("mb-oocjail:client:Leave")
 	isRunText = false
