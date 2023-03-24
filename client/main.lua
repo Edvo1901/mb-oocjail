@@ -58,8 +58,6 @@ end)
 
 RegisterNetEvent('mb-oocjail:client:UnJailOOC', function()
 	if jailTime > 0 then
-		inJail = false
-
 		MBNotify(Lang:t("notify.title"), Lang:t("success.you_are_free"), 'success')
 		DoScreenFadeOut(500)
 		while not IsScreenFadedOut() do
@@ -72,20 +70,21 @@ RegisterNetEvent('mb-oocjail:client:UnJailOOC', function()
 end)
 
 RegisterNetEvent('mb-oocjail:client:Leave', function()
-    jailTime = 0
-    TriggerServerEvent("mb-oocjail:server:SetJailTime", 0)
-    inJail = false
-    DoScreenFadeOut(500)
-    while not IsScreenFadedOut() do
-        Wait(10)
-    end
+	if inJail then
+		jailTime = 0
+		inJail = false
+		DoScreenFadeOut(500)
+		while not IsScreenFadedOut() do
+			Wait(10)
+		end
 
-	SetEntityCoords(PlayerPedId(), Config.OutJailLocation.x, Config.OutJailLocation.y, Config.OutJailLocation.z, 0, 0, 0, 0)
-	SetEntityInvincible(PlayerPedId(), false)
+		SetEntityCoords(PlayerPedId(), Config.OutJailLocation.x, Config.OutJailLocation.y, Config.OutJailLocation.z, 0, 0, 0, 0)
+		SetEntityInvincible(PlayerPedId(), false)
 
-    Wait(500)
+		Wait(500)
 
-    DoScreenFadeIn(1000)
+		DoScreenFadeIn(1000)
+	end
 end)
 
 RegisterNetEvent('mb-oocjail:client:showTime', function()
@@ -100,6 +99,7 @@ RegisterNetEvent('mb-oocjail:client:checkTime', function()
 	while inJail and jailTime > 0 do
 		Citizen.Wait(60 * 1000)
 		jailTime = jailTime - 1
+		if jailTime <= 0 then jailTime = 0 end
 		TriggerServerEvent("mb-oocjail:server:SetJailTime", jailTime)
 		TriggerServerEvent("mb-oocjail:server:CheckJailTime", jailTime)
 	end
